@@ -8,19 +8,19 @@ const Navbar = () => {
 
     const [showSidebar, setShowSidebar] = useState(false)
     return (
-        <div className='max-w-[1640] mx-auto flex justify-between items-center p-4 bg-[#f8f8f8]'>
+        <div className='mx-auto flex justify-between items-center p-4 bg-[#f8f8f8]'>
             {/* left side items  */}
             <div className='flex items-center'>
                 <div className='cursor-pointer'>
                     <AiOutlineMenu size={30} onClick={() => setShowSidebar(!showSidebar)} />
                 </div>
                 <h1 className='text-2xl sm:text-3xl lg:text-4xl p-2'>
-                    Big <span className='font-bold font-mono'>Store</span>
+                    <span className='font-bold font-mono text-orange-600'>Big </span><span className='font-bold font-mono'>Store</span>
                 </h1>
-                <div className='hidden lg:flex items-center bg-gray-200 rounded-full p-1 text-[14px]'>
+                {/* <div className='hidden lg:flex items-center bg-gray-200 rounded-full p-1 text-[14px]'>
                     <p className='bg-black text-white rounded-full p-2'>Delivery</p>
                     <p className='p-2'>Pickup</p>
-                </div>
+                </div> */}
             </div>
 
 
@@ -43,8 +43,19 @@ const Navbar = () => {
             {/* side bar menu */}
             {showSidebar &&
                 <div className='fixed top-0 left-0 w-[300px] h-screen bg-white z-10 duration-300'>
-                    <FaTimes size={20} className='absolute right-4 mt-4 cursor-pointer' onClick={()=>setShowSidebar(!showSidebar)}/>
-                    <h2 className='text-2xl p-4'>Menu</h2>
+                    <FaTimes size={20}
+                        className='absolute right-4 mt-4 cursor-pointer text-gray-700 hover:text-black transition transform hover:-translate-y-1 motion-reduce:transition-none motion-reduce:transform-none'
+                        onClick={() => setShowSidebar(!showSidebar)}
+                    />
+                    {/* <h2 className='text-2xl p-4'>Menu</h2> */}
+                    <div className='flex items-center p-4'>
+                        <div className='cursor-pointer'>
+                            <AiOutlineMenu size={30} onClick={() => setShowSidebar(!showSidebar)} />
+                        </div>
+                        <h1 className='text-2xl sm:text-3xl lg:text-4xl p-2'>
+                        <span className='font-bold font-mono text-orange-600'>Big </span><span className='font-bold font-mono'>Store</span>
+                        </h1>
+                    </div>
                     <nav>
                         <ul className='flex-flex-col p-4 text-gray-700'>
                             <li className='text-xl py-3 flex items-center' ><FaTruck size={25} className='mr-4' />Orders</li>
