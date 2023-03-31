@@ -12,9 +12,10 @@ const HeadlineCards = () => {
                 </div>
                 <img
                     className='max-h-[160px] md:max-h-[200px] w-full object-cover rounded-xl'
-                    src='https://images.pexels.com/photos/3513237/pexels-photo-3513237.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+                    src={'/images/grocery2.png'}
                     alt='promotions'
                 />
+                {/* src='https://images.pexels.com/photos/3513237/pexels-photo-3513237.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' */}
             </div>
             <div className='rounded-xl relative'>
                 {/* overlay */}
@@ -25,9 +26,10 @@ const HeadlineCards = () => {
                 </div>
                 <img
                     className='max-h-[160px] md:max-h-[200px] w-full object-cover rounded-xl'
-                    src='https://images.pexels.com/photos/319798/pexels-photo-319798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+                    src={'/images/grocery3.png'}
                     alt='best seller'
                 />
+                {/* src='https://images.pexels.com/photos/319798/pexels-photo-319798.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' */}
             </div>
             <div className='rounded-xl relative'>
                 {/* overlay */}
@@ -38,9 +40,10 @@ const HeadlineCards = () => {
                 </div>
                 <img
                     className='max-h-[160px] md:max-h-[200px] w-full object-cover rounded-xl'
-                    src='https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+                    src={'/images/grocery4.png'}
                     alt='new arrivals'
                 />
+                {/* src='https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' */}
             </div>
         </div>
     )

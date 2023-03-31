@@ -1,44 +1,84 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios';
 import { data } from '../data/data'
 
 const Products = () => {
-    console.log(data);
-    const [products, setProducts] = useState(data)
+    // console.log(data);
+    const navigate = useNavigate();
+    const initData = []
+    const [products, setProducts] = useState(initData)
+    const [categories, setCategories] = useState([])
 
+    // const url = 'http://52.221.183.219:8081/'
+    const IMG_PATH = process.env.REACT_APP_BACKEND_IMAGE_PATH
+    const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
+
+    const getProductData = () => {
+        axios.get(`${API_URL}product`)
+            .then((res) => {
+                console.log(res.data.Products)
+                setProducts(res.data.Products)
+            })
+            .catch(error => console.log('error', error))
+    }
+
+    const getCategoriesData = () => {
+        axios.get(`${API_URL}category`)
+            .then((res) => {
+                console.log(res.data.Category)
+                setCategories(res.data.Category)
+            })
+            .catch(error => console.log('error', error))
+    }
+
+    useEffect(() => {
+        getProductData();
+        getCategoriesData()
+    }, [])
 
     return (
         <div className='max-w-[1640px] mx-auto px-4 py-8'>
-            <h1 className='text-orange-600 font-bold text-4xl text-center'>Top Rated Menu</h1>
+            <h1 className='text-orange-600 font-bold text-4xl text-center'>Shop Now!</h1>
             {/* filter category */}
             <div className='flex flex-col lg:flex-row justify-between'>
                 <div>
-                    <p className='font-bold text-gray-700'>Filter Type : </p>
+                    <p className='font-bold text-gray-700'>Filter by Category : </p>
                     <div>
                         <button className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300'>All</button>
-                        <button className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300'>Burgers</button>
-                        <button className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300'>Pizza</button>
-                        <button className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300'>Salads</button>
-                        <button className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300'>Chicken</button>
+                        {
+                            categories.map((category) => (
+                                <button key={category.categoryid}
+                                    className='m-1 transition ease-in-out border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300 hover:-translate-y-1 hover:scale-105'
+                                >
+                                    {category.cname}
+                                </button>
+                            ))
+                        }
                     </div>
                 </div>
             </div>
             {/* display products */}
-            <div className='grid grid-cols-2 lg:grid-cols-4 gap-6 pt-4'>
+            <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4'>
                 {products.map((item, index) => (
                     <div
                         key={index}
-                        className='border shadow-lg rounded-lg hover:scale-105 duration-300'
+                        className='border shadow-lg rounded-lg hover:scale-105 duration-500'
                     >
                         <img
-                            src={item.image}
+                            src={item?.imageurl ? IMG_PATH + item.imageurl.substring(item.imageurl.lastIndexOf('/') + 1) : ''}
                             alt={item.name}
-                            className='w-full h-[200px] object-cover rounded-t-lg'
+                            className='w-full h-[200px] object-cover rounded-t-lg cursor-pointer'
+                            onClick={() => navigate('product/' + item.productid)}
                         />
-                        <div className='flex justify-between px-2 py-4'>
+                        {/* src={item?.imageurl ? item.imageurl : ''} */}
+                        {/* src={item?.imageurl? item.imageurl : require('../images/avocado.png')}  */}
+                        {/* src={item.image} */}
+                        <div className='flex justify-between px-2 py-4 bg-gray-50'>
                             <p className='font-bold'>{item.name}</p>
                             <p>
-                                <span className='bg-orange-500 text-white p-1 rounded-full'>
-                                    {item.price}
+                                <span className='bg-orange-500 text-white px-2 p-1 rounded-full'>
+                                    ${item.price}
                                 </span>
                             </p>
                         </div>
