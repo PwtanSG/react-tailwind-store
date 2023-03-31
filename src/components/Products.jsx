@@ -1,16 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
-import { data } from '../data/data'
 
 const Products = () => {
-    // console.log(data);
     const navigate = useNavigate();
     const initData = []
     const [products, setProducts] = useState(initData)
     const [categories, setCategories] = useState([])
 
-    // const url = 'http://52.221.183.219:8081/'
     const IMG_PATH = process.env.REACT_APP_BACKEND_IMAGE_PATH
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
 
