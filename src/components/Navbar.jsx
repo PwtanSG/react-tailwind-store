@@ -8,7 +8,7 @@ const Navbar = () => {
 
     const [showSidebar, setShowSidebar] = useState(false)
     return (
-        <div className='mx-auto flex justify-between items-center p-4 bg-[#f8f8f8]'>
+        <div className='w-screen mx-auto flex justify-between items-center p-4 bg-[#f8f8f8]'>
             {/* left side items  */}
             <div className='flex items-center'>
                 <div className='cursor-pointer'>

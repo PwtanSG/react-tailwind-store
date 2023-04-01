@@ -66,7 +66,7 @@ const ProductDetail = () => {
                     <p className='mt-3'>Price : ${product.price}</p>
                     <button
                         className='md:absolute md:left-0 md:bottom-5 mt-5 m-1 font-bold border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300 hover:font-bold'
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate(APP_PATH)}
                     >
                         Home
                     </button>
