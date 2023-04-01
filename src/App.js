@@ -12,10 +12,10 @@ function App() {
     <>
       <Router>
         <Navbar />
-        <Routes>
+        {/* <Routes>
           <Route path={APP_PATH} element={<Home />} />
           <Route path={`${APP_PATH}/product/:id`} element={<ProductDetail />} />
-        </Routes>
+        </Routes> */}
         <Footer />
       </Router>
     </>
