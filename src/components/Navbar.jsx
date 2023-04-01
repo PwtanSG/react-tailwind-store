@@ -9,7 +9,7 @@ const Navbar = () => {
 
     const [showSidebar, setShowSidebar] = useState(false)
     const navigate = useNavigate()
-    const APP_PATH = process.env.REACT_APP_PATH
+    const APP_PATH = process.env.REACT_APP_PATH?  process.env.REACT_APP_PATH : '/'
     
     return (
         <div className='w-screen mx-auto flex justify-between items-center p-4 bg-[#f8f8f8]'>

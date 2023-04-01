@@ -17,9 +17,10 @@ const ProductDetail = () => {
     const { id } = useParams()
     const IMG_PATH= process.env.REACT_APP_BACKEND_IMAGE_PATH
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
-    const APP_PATH = process.env.REACT_APP_PATH
-    // console.log(API_URL)
+    const APP_PATH = process.env.REACT_APP_PATH?  process.env.REACT_APP_PATH : '/'
+    console.log(APP_PATH)
     const navigate = useNavigate()
+
     const getProduct = async () => {
         setLoading(true)
         try {

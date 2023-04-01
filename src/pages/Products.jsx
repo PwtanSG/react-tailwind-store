@@ -14,6 +14,7 @@ const Products = () => {
 
     const IMG_PATH = process.env.REACT_APP_BACKEND_IMAGE_PATH
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
+    const APP_PATH = process.env.REACT_APP_PATH
 
     const filterCategory = (category_id) => {
         if (!category_id) {
@@ -144,7 +145,7 @@ const Products = () => {
                             src={item?.imageurl ? IMG_PATH + item.imageurl.substring(item.imageurl.lastIndexOf('/') + 1) : ''}
                             alt={item.name}
                             className='w-full h-[200px] object-cover rounded-t-lg cursor-pointer'
-                            onClick={() => navigate('product/' + item.productid)}
+                            onClick={() => navigate(APP_PATH + 'product/' + item.productid)}
                         />
                         {/* src={item?.imageurl ? item.imageurl : ''} */}
                         {/* src={item?.imageurl? item.imageurl : require('../images/avocado.png')}  */}

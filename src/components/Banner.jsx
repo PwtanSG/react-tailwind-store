@@ -3,7 +3,7 @@ import React from 'react'
 
 const Banner = () => {
     const APP_PATH = process.env.REACT_APP_PATH
-    const bannerImage = APP_PATH === '/'? '/images/supermarket-banner.jpeg' : APP_PATH + '/images/supermarket-banner.jpeg'
+    const bannerImage = APP_PATH +  '/images/supermarket-banner.jpeg'
 
     return (
         <div className='w-screen'>
