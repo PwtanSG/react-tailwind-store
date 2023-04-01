@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const ProductDetail = () => {
-    // const item = props.item
     const initProduct = {
         productid: '',
         description: '',
@@ -16,11 +15,10 @@ const ProductDetail = () => {
     const [product, setProduct] = useState(initProduct)
     const [status, setStatus] = useState(initStatus)
     const { id } = useParams()
-    // const imgPath= 'https://assetsawss3.s3.amazonaws.com/'
     const IMG_PATH= process.env.REACT_APP_BACKEND_IMAGE_PATH
-    // const API_URL = 'http://52.221.183.219:8081/'
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
-    console.log(API_URL)
+    const APP_PATH = process.env.REACT_APP_PATH
+    // console.log(API_URL)
     const navigate = useNavigate()
     const getProduct = async () => {
         setLoading(true)
