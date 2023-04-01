@@ -2,7 +2,9 @@ import React from 'react'
 // import bannerImage from '../images/supermarket-banner.jpeg'
 
 const Banner = () => {
-    const bannerImage = '/images/supermarket-banner.jpeg'
+    const APP_PATH = process.env.REACT_APP_PATH
+    const bannerImage = APP_PATH === '/'? '/images/supermarket-banner.jpeg' : APP_PATH + '/images/supermarket-banner.jpeg'
+
     return (
         <div className='w-screen'>
             <div className='max-w-[1640px] mx-auto p-4'>
