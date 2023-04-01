@@ -147,9 +147,6 @@ const Products = () => {
                             className='w-full h-[200px] object-cover rounded-t-lg cursor-pointer'
                             onClick={() => navigate(APP_PATH + 'product/' + item.productid)}
                         />
-                        {/* src={item?.imageurl ? item.imageurl : ''} */}
-                        {/* src={item?.imageurl? item.imageurl : require('../images/avocado.png')}  */}
-                        {/* src={item.image} */}
                         <div className='flex justify-between px-2 py-4 bg-gray-50'>
                             <p className='font-bold'>{item.name}</p>
                             <p>
