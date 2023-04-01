@@ -6,12 +6,27 @@ const Products = () => {
     const navigate = useNavigate();
     const initData = []
     const [products, setProducts] = useState(initData)
+    const [filteredProducts, setFilteredProducts] = useState(initData)
     const [categories, setCategories] = useState([])
+    const [selectedCategory, setSelectedCategory] = useState(0)
     const [loading, setLoading] = useState(false)
     const [status, setStatus] = useState({})
 
     const IMG_PATH = process.env.REACT_APP_BACKEND_IMAGE_PATH
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
+
+    const filterCategory = (category_id) => {
+        if (!category_id) {
+            setSelectedCategory(category_id)
+            setFilteredProducts([...products])
+            return
+        }
+        const filtered_products = products.filter((product) =>
+            product.categoryid === category_id
+        )
+        setSelectedCategory(category_id)
+        setFilteredProducts(filtered_products)
+    }
 
     const getProductData = async () => {
         setLoading(true)
@@ -21,6 +36,7 @@ const Products = () => {
                 url: API_URL + 'product',
             })
             setProducts(response.data.Products)
+            setFilteredProducts(response.data.Products)
             // setLoading(false)
         } catch (err) {
             // console.log('err', err)
@@ -96,15 +112,22 @@ const Products = () => {
                     <div>
                         <p className='font-bold text-gray-700'>Filter by Category : </p>
                         <div>
-                            <button className='m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300'>All</button>
+                            <button
+                                className={`m-1 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300 ${selectedCategory === 0 ? "bg-orange-600 text-white" : ""}`}
+                                onClick={() => filterCategory(0)}
+                            >
+                                All
+                            </button>
                             {
-                                categories.map((category) => (
-                                    <button key={category.categoryid}
-                                        className='m-1 transition ease-in-out border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300 hover:-translate-y-1 hover:scale-105'
+                                categories.map((category) => {
+                                    const selected = selectedCategory === category.categoryid
+                                    return <button key={category.categoryid}
+                                        className={`m-1 transition ease-in-out border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300 hover:-translate-y-1 hover:scale-105 ${selected ? "bg-orange-600 text-white" : ""}`}
+                                        onClick={() => filterCategory(category.categoryid)}
                                     >
                                         {category.cname}
                                     </button>
-                                ))
+                                    })
                             }
                         </div>
                     </div>
@@ -112,7 +135,7 @@ const Products = () => {
             }
             {/* display products */}
             <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4'>
-                {products.map((item, index) => (
+                {filteredProducts.map((item, index) => (
                     <div
                         key={index}
                         className='border shadow-lg rounded-lg hover:scale-105 duration-500'
