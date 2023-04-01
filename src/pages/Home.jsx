@@ -1,7 +1,8 @@
 import React from 'react'
-import Banner from "./Banner";
-import HeadlineCards from "./HeadlineCards";
+import Banner from "../components/Banner";
+import HeadlineCards from "../components/HeadlineCards";
 import Products from "./Products";
+import Footer from '../components/Footer';
 
 const Home = () => {
     return (
