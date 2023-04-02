@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { FaAngleLeft } from 'react-icons/fa'
 import axios from 'axios'
 
 const ProductDetail = () => {
@@ -63,10 +64,10 @@ const ProductDetail = () => {
                             <p className='mt-3'>{product.description} </p>
                             <p className='mt-3'>Price : ${product.price}</p>
                             <button
-                                className='md:absolute md:left-0 md:bottom-5 mt-5 m-1 font-bold border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300 hover:font-bold'
+                                className='md:absolute md:left-0 md:bottom-5 mt-5 m-1 font-bold border-gray-600 text-gray-600 hover:bg-orange-600 hover:text-white duration-300 hover:font-bold  hover:border-orange-600'
                                 onClick={() => navigate(APP_PATH)}
                             >
-                                Home
+                                <FaAngleLeft />
                             </button>
                         </div>
                     </div>
