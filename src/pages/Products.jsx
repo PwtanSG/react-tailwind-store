@@ -106,7 +106,7 @@ const Products = () => {
 
     return (
         <div className='max-w-[1640px] mx-auto px-4 py-8'>
-            <h1 className='text-orange-600 font-bold text-4xl text-center'>Shop Now!</h1>
+            <h1 id='shop' className='text-orange-600 font-bold text-4xl text-center'>Shop Now!</h1>
             {/* filter category */}
             {!loading &&
                 <div className='flex flex-col lg:flex-row justify-between'>
