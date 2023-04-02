@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import { FaRegHeart, FaHeart } from 'react-icons/fa';
 
 const Products = (props) => {
     const searchKeyword = props.search
@@ -164,8 +165,8 @@ const Products = (props) => {
                             onClick={() => navigate(APP_PATH + 'product/' + item.productid)}
                         />
                         <div className='flex justify-between px-2 py-4 bg-gray-50'>
-                            <p className='font-bold'>{item.name}</p>
-                            <p>
+                            <p className='font-bold flex items-center'>{item.name} <FaRegHeart size={20} className='text-gray-700 ml-2'/></p>
+                            <p className=''>
                                 <span className='bg-orange-500 text-white px-2 p-1 rounded-full'>
                                     ${item.price}
                                 </span>
