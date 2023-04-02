@@ -5,7 +5,7 @@ import { FaTimes, FaTruck, FaWallet } from 'react-icons/fa'
 import { MdHelp, MdFavorite, MdLogin, Mdlogout, MdShoppingBasket } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 
-const Navbar = () => {
+const Navbar = ({ keyword, setKeyword }) => {
 
     const [showSidebar, setShowSidebar] = useState(false)
     const navigate = useNavigate()
@@ -37,9 +37,12 @@ const Navbar = () => {
                 <div className='bg-gray-200 rounded-full flex items-center px-2 w-[140px] sm:w-[300px]'>
                     <AiOutlineSearch size={25} />
                     <input
+                        name='keyword'
                         className='bg-transparent p-2 w-full focus:outline-none'
                         type='text'
                         placeholder='Search...'
+                        value={keyword}
+                        onChange={(e) => setKeyword(e.target.value)}
                     />
                 </div>
                 <button className='bg-black text-white p-2 ml-[5px]'><BsCart3 size={20} /></button>

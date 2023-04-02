@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
-const Products = () => {
+const Products = (props) => {
+    const searchKeyword = props.search
     const navigate = useNavigate();
     const initData = []
     const [products, setProducts] = useState(initData)
@@ -103,6 +104,19 @@ const Products = () => {
         getCategoriesData()
         setLoading(false)
     }, [])
+
+    useEffect(() => {
+        setLoading(true)
+        if (searchKeyword) {
+            const searchItems = products.filter(
+                item => item.name && item.name.toLowerCase().includes(searchKeyword.toLowerCase()),
+            );
+            setFilteredProducts(searchItems)    
+        }
+        setLoading(false)
+    }, [searchKeyword])
+
+   
 
     return (
         <div className='max-w-[1640px] mx-auto px-4 py-8'>
