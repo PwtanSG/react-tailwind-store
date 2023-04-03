@@ -54,8 +54,7 @@ const Favourites = () => {
     }, [API_URL, favourite])
 
     useEffect(() => {
-        const fav_pid = JSON.parse(localStorage.getItem('favourite_pid'))
-        setFavourite(fav_pid)
+        setFavourite(localStorage.getItem('favourite_pid')? JSON.parse(localStorage.getItem('favourite_pid')) : [])
     }, [])
 
     return (
@@ -64,6 +63,7 @@ const Favourites = () => {
                 <h1 className='text-orange-600 font-bold text-4xl text-center'>My Favourites</h1>
             </div>
             {!favProducts.length && <div className='py-8'>You have no favourites added yet!</div>}
+            {(favProducts.length > 0) && (
             <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4'>
                 {!loading &&
                     favProducts.map(item => (
@@ -101,7 +101,7 @@ const Favourites = () => {
                         </div>
                     ))
                 }
-            </div>
+            </div>)}
         </div>
     )
 }

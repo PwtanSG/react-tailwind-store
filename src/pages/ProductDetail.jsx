@@ -56,7 +56,7 @@ const ProductDetail = () => {
     }
 
     useEffect(() => {
-        setFavourite(JSON.parse(localStorage.getItem('favourite_pid')))
+        setFavourite(localStorage.getItem('favourite_pid')? JSON.parse(localStorage.getItem('favourite_pid')) : [])
         getProduct();
     }, [id])
 

@@ -117,7 +117,7 @@ const Products = (props) => {
         setLoading(true)
         getProductData()
         getCategoriesData()
-        setFavourite(JSON.parse(localStorage.getItem('favourite_pid')))
+        setFavourite(localStorage.getItem('favourite_pid')? JSON.parse(localStorage.getItem('favourite_pid')) : [])
         setLoading(false)
     }, [])
 
