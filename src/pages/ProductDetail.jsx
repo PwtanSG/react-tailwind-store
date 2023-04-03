@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { FaAngleLeft } from 'react-icons/fa'
+import { FaAngleLeft, FaRegHeart } from 'react-icons/fa'
 import axios from 'axios'
 
 const ProductDetail = () => {
@@ -15,11 +15,25 @@ const ProductDetail = () => {
     const [loading, setLoading] = useState(false)
     const [product, setProduct] = useState(initProduct)
     const [status, setStatus] = useState(initStatus)
+    const [favourite, setFavourite] = useState([])
     const { id } = useParams()
     const IMG_PATH = process.env.REACT_APP_BACKEND_IMAGE_PATH
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
-    const APP_PATH = process.env.REACT_APP_PATH ? process.env.REACT_APP_PATH : '/'
+    // const APP_PATH = process.env.REACT_APP_PATH ? process.env.REACT_APP_PATH : '/'
     const navigate = useNavigate()
+
+    const updateToFavourite = (productId) => {
+        let selected_favourite = [...favourite]
+        if (selected_favourite.includes(productId)) {
+            selected_favourite = selected_favourite.filter(item => item !== productId)
+            setFavourite(selected_favourite)
+        } else {
+            selected_favourite = [...favourite, productId]
+            setFavourite(selected_favourite)
+            
+        }
+        localStorage.setItem('favourite_pid', JSON.stringify(selected_favourite))
+    }
 
     const getProduct = async () => {
         setLoading(true)
@@ -42,6 +56,7 @@ const ProductDetail = () => {
     }
 
     useEffect(() => {
+        setFavourite(JSON.parse(localStorage.getItem('favourite_pid')))
         getProduct();
     }, [id])
 
@@ -63,9 +78,14 @@ const ProductDetail = () => {
                             <h2 className='font-bold mt-0 sm:mt-5'>{product.name}</h2>
                             <p className='mt-3'>{product.description} </p>
                             <p className='mt-3'>Price : ${product.price}</p>
+                            <FaRegHeart
+                                size={20}
+                                className={`${favourite.includes(product.productid) ? 'text-[#e60000]' : 'text-gray-500'} mt-3 cursor-pointer`}
+                                onClick={() => updateToFavourite(product.productid)}
+                            />
                             <button
                                 className='md:absolute md:left-0 md:bottom-5 mt-5 m-1 font-bold border-gray-600 text-gray-600 hover:bg-orange-600 hover:text-white duration-300 hover:font-bold  hover:border-orange-600'
-                                onClick={() => navigate(APP_PATH)}
+                                onClick={() => navigate(-1)}
                             >
                                 <FaAngleLeft />
                             </button>

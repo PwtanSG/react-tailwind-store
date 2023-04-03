@@ -69,11 +69,11 @@ const Navbar = ({ keyword, setKeyword }) => {
                     </div>
                     <nav>
                         <ul className='flex-flex-col p-4 text-gray-700'>
-                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold' onClick={() => sideBarClick('')}><MdShoppingBasket size={25} className='mr-4' />Shop Now</li>
-                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold' ><MdFavorite size={25} className='mr-4' />Favorites</li>
-                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold' onClick={() => sideBarClick('login')}><MdLogin size={25} className='mr-4' />Sign In</li>
-                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold' ><MdHelp size={25} className='mr-4' />Help</li>
-                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold' ><AiFillTag size={25} className='mr-4' />Promotions</li>
+                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold hover:text-orange-600' onClick={() => sideBarClick('')}><MdShoppingBasket size={25} className='mr-4' />Shop Now</li>
+                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold hover:text-orange-600' onClick={() => sideBarClick('favourites')}><MdFavorite size={25} className='mr-4' />Favourites</li>
+                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold hover:text-orange-600' onClick={() => sideBarClick('login')}><MdLogin size={25} className='mr-4' />Sign In</li>
+                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold hover:text-orange-600' ><MdHelp size={25} className='mr-4' />Help</li>
+                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold hover:text-orange-600' ><AiFillTag size={25} className='mr-4' />Promotions</li>
                         </ul>
                     </nav>
                 </div>
