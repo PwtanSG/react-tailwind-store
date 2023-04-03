@@ -117,7 +117,7 @@ const Products = (props) => {
         setLoading(true)
         getProductData()
         getCategoriesData()
-        setFavourite(localStorage.getItem('favourite_pid')? JSON.parse(localStorage.getItem('favourite_pid')) : [])
+        setFavourite(localStorage.getItem('favourite_pid') ? JSON.parse(localStorage.getItem('favourite_pid')) : [])
         setLoading(false)
     }, [])
 
@@ -197,7 +197,7 @@ const Products = (props) => {
                             </p>
                             <p>
                                 <span className='bg-orange-500 text-white px-2 p-1 rounded-full'>
-                                    ${item.price}
+                                    ${Number(item.price).toFixed(2)}
                                 </span>
                             </p>
                         </div>

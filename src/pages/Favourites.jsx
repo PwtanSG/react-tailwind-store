@@ -54,7 +54,7 @@ const Favourites = () => {
     }, [API_URL, favourite])
 
     useEffect(() => {
-        setFavourite(localStorage.getItem('favourite_pid')? JSON.parse(localStorage.getItem('favourite_pid')) : [])
+        setFavourite(localStorage.getItem('favourite_pid') ? JSON.parse(localStorage.getItem('favourite_pid')) : [])
     }, [])
 
     return (
@@ -64,44 +64,44 @@ const Favourites = () => {
             </div>
             {!favProducts.length && <div className='py-8'>You have no favourites added yet!</div>}
             {(favProducts.length > 0) && (
-            <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4'>
-                {!loading &&
-                    favProducts.map(item => (
-                        <div
-                            key={item.productid}
-                            className='border shadow-lg rounded-lg hover:scale-105 duration-500'
-                        >
-                            <img
-                                src={item?.imageurl ? IMG_PATH + item.imageurl.substring(item.imageurl.lastIndexOf('/') + 1) : ''}
-                                alt={item.name}
-                                className='w-full h-[200px] object-cover rounded-t-lg cursor-pointer'
-                                onClick={() => navigate('/product/' + item.productid)}
-                            />
-                            <div className='flex justify-between px-2 py-4 bg-gray-50'>
-                                <p className='font-bold flex items-center'>{item.name}
-                                    {favourite.includes(item.productid) ?
-                                        (<FaHeart
-                                            size={18}
-                                            className='text-[#e60000] ml-2 cursor-pointer'
-                                            onClick={() => updateToFavourite(item.productid)}
-                                        />)
-                                        :
-                                        (<FaRegHeart
-                                            size={18}
-                                            className='text-gray-500 ml-2 cursor-pointer'
-                                            onClick={() => updateToFavourite(item.productid)}
-                                        />)}
-                                </p>
-                                <p>
-                                    <span className='bg-orange-500 text-white px-2 p-1 rounded-full'>
-                                        ${item.price}
-                                    </span>
-                                </p>
+                <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4'>
+                    {!loading &&
+                        favProducts.map(item => (
+                            <div
+                                key={item.productid}
+                                className='border shadow-lg rounded-lg hover:scale-105 duration-500'
+                            >
+                                <img
+                                    src={item?.imageurl ? IMG_PATH + item.imageurl.substring(item.imageurl.lastIndexOf('/') + 1) : ''}
+                                    alt={item.name}
+                                    className='w-full h-[200px] object-cover rounded-t-lg cursor-pointer'
+                                    onClick={() => navigate('/product/' + item.productid)}
+                                />
+                                <div className='flex justify-between px-2 py-4 bg-gray-50'>
+                                    <p className='font-bold flex items-center'>{item.name}
+                                        {favourite.includes(item.productid) ?
+                                            (<FaHeart
+                                                size={18}
+                                                className='text-[#e60000] ml-2 cursor-pointer'
+                                                onClick={() => updateToFavourite(item.productid)}
+                                            />)
+                                            :
+                                            (<FaRegHeart
+                                                size={18}
+                                                className='text-gray-500 ml-2 cursor-pointer'
+                                                onClick={() => updateToFavourite(item.productid)}
+                                            />)}
+                                    </p>
+                                    <p>
+                                        <span className='bg-orange-500 text-white px-2 p-1 rounded-full'>
+                                            ${Number(item.price).toFixed(2)}
+                                        </span>
+                                    </p>
+                                </div>
                             </div>
-                        </div>
-                    ))
-                }
-            </div>)}
+                        ))
+                    }
+                </div>)}
         </div>
     )
 }

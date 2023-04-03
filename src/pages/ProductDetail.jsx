@@ -77,7 +77,7 @@ const ProductDetail = () => {
                         <div className='relative'>
                             <h2 className='font-bold mt-0 sm:mt-5'>{product.name}</h2>
                             <p className='mt-3'>{product.description} </p>
-                            <p className='mt-3'>Price : ${product.price}</p>
+                            <p className='mt-3'>Price : ${Number(product.price).toFixed(2)}</p>
                             {favourite.includes(product.productid) ?
                                     (<FaHeart
                                         size={18}
