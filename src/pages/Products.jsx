@@ -13,10 +13,26 @@ const Products = (props) => {
     const [selectedCategory, setSelectedCategory] = useState(0)
     const [loading, setLoading] = useState(false)
     const [status, setStatus] = useState({})
+    const [favourite, setFavourite] = useState([1, 2])
 
     const IMG_PATH = process.env.REACT_APP_BACKEND_IMAGE_PATH
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
     const APP_PATH = process.env.REACT_APP_PATH
+
+    const updateToFavourite = (productId) => {
+        console.log(productId)
+        let selected_favourite = [...favourite]
+        if (selected_favourite.includes(productId)) {
+            // console.log('included: ', productId, selected_favourite);
+            selected_favourite = selected_favourite.filter(item => item != productId)
+            setFavourite(selected_favourite)
+        } else {
+            selected_favourite = [...favourite, productId]
+            setFavourite(selected_favourite)
+            
+        }
+        localStorage.setItem('favourite', JSON.stringify(selected_favourite))
+    }
 
     const filterCategory = (category_id) => {
         if (!category_id) {
@@ -112,17 +128,19 @@ const Products = (props) => {
             const searchItems = products.filter(
                 item => item.name && item.name.toLowerCase().includes(searchKeyword.toLowerCase()),
             );
-            setFilteredProducts(searchItems)    
+            setFilteredProducts(searchItems)
         } else {
-            setFilteredProducts([...products])   
+            setFilteredProducts([...products])
         }
         setLoading(false)
     }, [searchKeyword])
 
-   
+
 
     return (
         <div className='max-w-[1640px] mx-auto px-4 py-8'>
+            {favourite.length}<br></br>
+            {favourite.toString()}
             {/* <h1 id='shop' className='text-orange-600 font-bold text-4xl text-center'>Shop Now!</h1> */}
             {/* filter category */}
             {!loading &&
@@ -145,7 +163,7 @@ const Products = (props) => {
                                     >
                                         {category.cname}
                                     </button>
-                                    })
+                                })
                             }
                         </div>
                     </div>
@@ -165,8 +183,14 @@ const Products = (props) => {
                             onClick={() => navigate(APP_PATH + 'product/' + item.productid)}
                         />
                         <div className='flex justify-between px-2 py-4 bg-gray-50'>
-                            <p className='font-bold flex items-center'>{item.name} <FaRegHeart size={20} className='text-gray-700 ml-2'/></p>
-                            <p className=''>
+                            <p className='font-bold flex items-center'>{item.name}
+                                <FaRegHeart
+                                    size={20}
+                                    className={`${favourite.includes(item.productid) ? 'text-[#e60000]' : 'text-gray-500'} ml-2 cursor-pointer`}
+                                    onClick={()=>updateToFavourite(item.productid)}
+                                />
+                            </p>
+                            <p>
                                 <span className='bg-orange-500 text-white px-2 p-1 rounded-full'>
                                     ${item.price}
                                 </span>
