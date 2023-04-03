@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { AiOutlineMenu, AiOutlineSearch, AiFillTag } from 'react-icons/ai'
 import { BsCart3 } from 'react-icons/bs'
-import { FaTimes, FaTruck, FaWallet } from 'react-icons/fa'
-import { MdHelp, MdFavorite, MdLogin, Mdlogout, MdShoppingBasket } from 'react-icons/md'
+import { FaTimes } from 'react-icons/fa'
+import { MdHelp, MdFavorite, MdLogin, MdShoppingBasket } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 
 const Navbar = ({ keyword, setKeyword }) => {

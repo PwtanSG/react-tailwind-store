@@ -22,12 +22,12 @@ const Products = (props) => {
     const updateToFavourite = (productId) => {
         let selected_favourite = [...favourite]
         if (selected_favourite.includes(productId)) {
-            selected_favourite = selected_favourite.filter(item => item != productId)
+            selected_favourite = selected_favourite.filter(item => item !== productId)
             setFavourite(selected_favourite)
         } else {
             selected_favourite = [...favourite, productId]
             setFavourite(selected_favourite)
-            
+
         }
         localStorage.setItem('favourite_pid', JSON.stringify(selected_favourite))
     }
@@ -181,11 +181,19 @@ const Products = (props) => {
                         />
                         <div className='flex justify-between px-2 py-4 bg-gray-50'>
                             <p className='font-bold flex items-center'>{item.name}
-                                <FaRegHeart
-                                    size={20}
-                                    className={`${favourite.includes(item.productid) ? 'text-[#e60000]' : 'text-gray-500'} ml-2 cursor-pointer`}
-                                    onClick={()=>updateToFavourite(item.productid)}
-                                />
+
+                                {favourite.includes(item.productid) ?
+                                    (<FaHeart
+                                        size={18}
+                                        className='text-[#e60000] ml-2 cursor-pointer'
+                                        onClick={() => updateToFavourite(item.productid)}
+                                    />)
+                                    :
+                                    (<FaRegHeart
+                                        size={18}
+                                        className='text-gray-500 ml-2 cursor-pointer'
+                                        onClick={() => updateToFavourite(item.productid)}
+                                    />)}
                             </p>
                             <p>
                                 <span className='bg-orange-500 text-white px-2 p-1 rounded-full'>

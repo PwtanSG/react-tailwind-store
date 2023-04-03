@@ -22,7 +22,7 @@ const Favourites = () => {
         } else {
             selected_favourite = [...favourite, productId]
             setFavourite(selected_favourite)
-            
+
         }
         localStorage.setItem('favourite_pid', JSON.stringify(selected_favourite))
     }
@@ -55,7 +55,6 @@ const Favourites = () => {
 
     useEffect(() => {
         const fav_pid = JSON.parse(localStorage.getItem('favourite_pid'))
-        console.log(fav_pid)
         setFavourite(fav_pid)
     }, [])
 
@@ -66,7 +65,7 @@ const Favourites = () => {
             </div>
             {!favProducts.length && <div className='py-8'>You have no favourites added yet!</div>}
             <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4'>
-                {!loading && 
+                {!loading &&
                     favProducts.map(item => (
                         <div
                             key={item.productid}
@@ -80,11 +79,18 @@ const Favourites = () => {
                             />
                             <div className='flex justify-between px-2 py-4 bg-gray-50'>
                                 <p className='font-bold flex items-center'>{item.name}
-                                    <FaRegHeart
-                                        size={20}
-                                        className={`${favourite.includes(item.productid) ? 'text-[#e60000]' : 'text-gray-500'} ml-2 cursor-pointer`}
-                                        onClick={() => updateToFavourite(item.productid)}
-                                    />
+                                    {favourite.includes(item.productid) ?
+                                        (<FaHeart
+                                            size={18}
+                                            className='text-[#e60000] ml-2 cursor-pointer'
+                                            onClick={() => updateToFavourite(item.productid)}
+                                        />)
+                                        :
+                                        (<FaRegHeart
+                                            size={18}
+                                            className='text-gray-500 ml-2 cursor-pointer'
+                                            onClick={() => updateToFavourite(item.productid)}
+                                        />)}
                                 </p>
                                 <p>
                                     <span className='bg-orange-500 text-white px-2 p-1 rounded-full'>
