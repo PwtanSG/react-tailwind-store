@@ -1,12 +1,14 @@
 import React from 'react'
 import Banner from "../components/Banner";
+import ImageSlider from "../components/ImageSlider";
 import HeadlineCards from "../components/HeadlineCards";
 import Products from "./Products";
 
 const Home = ({search}) => {
     return (
         <>
-            <Banner />
+            {/* <Banner /> */}
+            <ImageSlider />
             {/* <HeadlineCards /> */}
             <Products search={search}/>
         </>
