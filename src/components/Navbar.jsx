@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { AiOutlineMenu, AiOutlineSearch, AiFillTag } from 'react-icons/ai'
 import { BsCart3 } from 'react-icons/bs'
-import { FaTimes } from 'react-icons/fa'
-import { MdHelp, MdFavorite, MdLogin, MdShoppingBasket } from 'react-icons/md'
+import { FaTimes, FaSignInAlt } from 'react-icons/fa'
+import { MdHelp, MdFavorite, MdShoppingBasket } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
 
 const Navbar = ({ keyword, setKeyword }) => {
@@ -71,7 +71,7 @@ const Navbar = ({ keyword, setKeyword }) => {
                         <ul className='flex-flex-col p-4 text-gray-700'>
                             <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold hover:text-orange-600' onClick={() => sideBarClick('')}><MdShoppingBasket size={25} className='mr-4' />Shop Now</li>
                             <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold hover:text-orange-600' onClick={() => sideBarClick('favourites')}><MdFavorite size={25} className='mr-4' />Favourites</li>
-                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold hover:text-orange-600' onClick={() => sideBarClick('login')}><MdLogin size={25} className='mr-4' />Sign In</li>
+                            <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold hover:text-orange-600' onClick={() => sideBarClick('login')}><FaSignInAlt size={25} className='mr-4' />Sign In</li>
                             <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold hover:text-orange-600' ><MdHelp size={25} className='mr-4' />Help</li>
                             <li className='text-xl py-3 flex items-center cursor-pointer hover:font-semibold hover:text-orange-600' ><AiFillTag size={25} className='mr-4' />Promotions</li>
                         </ul>
