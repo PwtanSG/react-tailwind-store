@@ -1,7 +1,8 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { FaSignInAlt, FaSpinner } from 'react-icons/fa'
-
+import Toast from '../components/Toast'
 
 const Login = () => {
 
@@ -14,10 +15,12 @@ const Login = () => {
         error: false,
         errorMessage: ''
     }
+    const navigate = useNavigate()
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
     const [formData, setFormData] = useState(initFormData)
     const [processing, setProcessing] = useState(false)
     const [status, setStatus] = useState(initStatus)
+    const [showToast, setShowToast] = useState(false)
 
     const onChangeHandler = (e) => {
         setFormData(
@@ -70,7 +73,12 @@ const Login = () => {
                         token: response.data.JWT
                     }))
                     setStatus(initStatus)
-
+                    setFormData(initFormData)
+                    setShowToast(true)
+                    setTimeout(() => {
+                        setShowToast(false)
+                        navigate('/')
+                    }, 1000)
                 } else {
                     setStatus({
                         error: true,
@@ -127,18 +135,18 @@ const Login = () => {
                         <input
                             name='email'
                             type='text'
-                            className='border rounded-lg py-2 px-1'
-                            placeholder=' Enter your email'
+                            className='border rounded-lg p-3'
+                            placeholder=' Enter email (janetan@gmail.com)'
                             value={formData.email}
                             onChange={onChangeHandler}
                         />
                     </div>
                     <div className='flex flex-col py-2'>
-                        <label>Password</label>
+                        <label>Password<span className='text-center text-gray-400'>  Pwd:12345678</span></label>
                         <input
                             name='password'
                             type='password'
-                            className='border rounded-lg py-2'
+                            className='border rounded-lg p-3'
                             value={formData.password}
                             onChange={onChangeHandler}
                         />
@@ -160,6 +168,9 @@ const Login = () => {
                     </div>
                 </form>
             </div>
+            {showToast &&
+                <Toast msg='Login successfully' type='success'/>
+            }
         </div>
     )
 }
