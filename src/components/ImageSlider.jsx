@@ -11,19 +11,19 @@ const ImageSlider = () => {
             text: 'Wide Variety Of Choice'
         },
         {
-            url: '/images/grocery3.png',
+            url: '/images/supermarket-banner1.jpg',
             text: 'Freshest Produce'
         },
         {
-            url: '/images/grocery4.png',
+            url: '/images/supermarket-banner2.jpg',
             text: 'Your everyday store'
         },
         {
-            url: '/images/grocery5.png',
+            url: '/images/supermarket-banner3.jpg',
             text: 'Freshness Guarantee'
         },
         {
-            url: '/images/grocery2.png',
+            url: '/images/supermarket-banner4.jpg',
             text: 'All for you'
         },
     ];
@@ -63,6 +63,7 @@ const ImageSlider = () => {
                     {
                         slides.map((slide, idx) => (
                             <FaMinus 
+                                size={18}
                                 key={idx} 
                                 className={`${currentImgIndex === idx? 'text-gray-800':'text-gray-400' } mt-2 cursor-pointer`} 
                                 onClick={()=>goToSlide(idx)}
