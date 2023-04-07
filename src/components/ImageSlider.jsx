@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaAngleLeft, FaAngleRight, FaMinus } from 'react-icons/fa'
 
 
-const ImageSlider = () => {
+const ImageSlider = ({ autoSlide = false, autoSlideInterval = 3000 }) => {
 
     const [currentImgIndex, setCurrentImgIndex] = useState(0)
     const slides = [
@@ -29,20 +29,23 @@ const ImageSlider = () => {
     ];
 
     const prevSlide = () => {
-        const isFirstSlide = currentImgIndex === 0;
-        const newIndex = isFirstSlide ? slides.length - 1 : currentImgIndex - 1;
-        setCurrentImgIndex(newIndex);
+        setCurrentImgIndex(currentImgIndex === 0 ? slides.length - 1 : currentImgIndex - 1)
     };
 
     const nextSlide = () => {
-        const isLastSlide = currentImgIndex === slides.length - 1;
-        const newIndex = isLastSlide ? 0 : currentImgIndex + 1;
-        setCurrentImgIndex(newIndex);
+        // setCurrentImgIndex(currentImgIndex === slides.length - 1 ? 0 : currentImgIndex + 1)
+        setCurrentImgIndex((currentImgIndex) => currentImgIndex === slides.length - 1 ? 0 : currentImgIndex + 1)
     };
 
     const goToSlide = (slideIndex) => {
         setCurrentImgIndex(slideIndex);
     };
+
+    useEffect(() => {
+        if (!autoSlide) return
+        const slideInterval = setInterval(nextSlide, autoSlideInterval)
+        return () => clearInterval(slideInterval)
+    }, [])
 
     return (
         <div className='w-screen'>
@@ -59,23 +62,24 @@ const ImageSlider = () => {
                 <div className='absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-gray-300 hover:text-white bg-black/20 cursor-pointer'>
                     <FaAngleRight size={30} onClick={nextSlide} />
                 </div>
-                <div className='flex justify-center'>
-                    {
-                        slides.map((slide, idx) => (
-                            <FaMinus 
-                                size={18}
-                                key={idx} 
-                                className={`${currentImgIndex === idx? 'text-gray-800':'text-gray-400' } mt-2 cursor-pointer`} 
-                                onClick={()=>goToSlide(idx)}
-                            />
-                        ))
-                    }
+                <div className='absolute bottom-5 left-0 right-0'>
+                    <div className='flex justify-center items-center'>
+                        {
+                            slides.map((slide, idx) => (
+                                <FaMinus
+                                    size={currentImgIndex === idx ? 23 : 20}
+                                    key={idx}
+                                    className={`${currentImgIndex === idx ? 'text-white' : 'text-gray-300'} mt-2 cursor-pointer`}
+                                    onClick={() => goToSlide(idx)}
+                                />
+                            ))
+                        }
+                    </div>
                 </div>
                 <div className='absolute bottom-10 left-10 text-gray-200 font-semibold text-2xl '>
                     {slides[currentImgIndex].text}
                 </div>
             </div>
-
         </div>
     )
 }

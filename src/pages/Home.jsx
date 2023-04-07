@@ -8,7 +8,7 @@ const Home = ({search}) => {
     return (
         <>
             {/* <Banner /> */}
-            <ImageSlider />
+            <ImageSlider autoSlide={false} autoSlideInterval={8000}/>
             {/* <HeadlineCards /> */}
             <Products search={search}/>
         </>
