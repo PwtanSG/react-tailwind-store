@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
@@ -14,6 +14,7 @@ const Products = (props) => {
     const [loading, setLoading] = useState(false)
     const [status, setStatus] = useState({})
     const [favourite, setFavourite] = useState([])
+    const rendered = useRef(true)
 
     const IMG_PATH = process.env.REACT_APP_BACKEND_IMAGE_PATH
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
@@ -45,45 +46,6 @@ const Products = (props) => {
         setFilteredProducts(filtered_products)
     }
 
-    const getProductData = async () => {
-        setLoading(true)
-        try {
-            const response = await axios({
-                method: 'get',
-                url: API_URL + 'product',
-            })
-            setProducts(response.data.Products)
-            setFilteredProducts(response.data.Products)
-            // setLoading(false)
-        } catch (err) {
-            // console.log('err', err)
-            // setLoading(false)
-            setStatus({
-                ...status,
-                error: true,
-                errorMessage: err.response.data.message
-            })
-        }
-    }
-    const getCategoriesData = async () => {
-        setLoading(true)
-        try {
-            const response = await axios({
-                method: 'get',
-                url: API_URL + 'category',
-            })
-            setCategories(response.data.Category)
-            // setLoading(false)
-        } catch (err) {
-            // console.log('err', err)
-            // setLoading(false)
-            setStatus({
-                ...status,
-                error: true,
-                errorMessage: err.response.data.message
-            })
-        }
-    }
 
     // const getCategoriesData = () => {
     //     axios.get(`${API_URL}category`)
@@ -114,12 +76,56 @@ const Products = (props) => {
 
 
     useEffect(() => {
-        setLoading(true)
-        getProductData()
-        getCategoriesData()
-        setFavourite(localStorage.getItem('favourite_pid') ? JSON.parse(localStorage.getItem('favourite_pid')) : [])
-        setLoading(false)
-    }, [])
+
+        const getProductData = async () => {
+            setLoading(true)
+            try {
+                const response = await axios({
+                    method: 'get',
+                    url: API_URL + 'product',
+                })
+                setProducts(response.data.Products)
+                setFilteredProducts(response.data.Products)
+                console.log(response.data.Products)
+            } catch (err) {
+                setStatus({
+                    ...status,
+                    error: true,
+                    errorMessage: err.response.data.message
+                })
+            }
+        }
+
+        const getCategoriesData = async () => {
+            setLoading(true)
+            try {
+                const response = await axios({
+                    method: 'get',
+                    url: API_URL + 'category',
+                })
+                setCategories(response.data.Category)
+                console.log(response.data.Category)
+            } catch (err) {
+                setStatus({
+                    ...status,
+                    error: true,
+                    errorMessage: err.response.data.message
+                })
+            }
+        }
+        if (rendered.current) {
+            setLoading(true)
+            getProductData()
+            getCategoriesData()
+            setFavourite(localStorage.getItem('favourite_pid') ? JSON.parse(localStorage.getItem('favourite_pid')) : [])
+            setLoading(false)
+            // rendered.current = false
+        }
+
+        return ()=>{
+            rendered.current = false
+        }
+    }, [API_URL])
 
     useEffect(() => {
         setLoading(true)
@@ -132,7 +138,7 @@ const Products = (props) => {
             setFilteredProducts([...products])
         }
         setLoading(false)
-    }, [searchKeyword])
+    }, [searchKeyword, products])
 
 
 
