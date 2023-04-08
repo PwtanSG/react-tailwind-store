@@ -55,11 +55,11 @@ const ImageSlider = ({ autoSlide = false, autoSlideInterval = 3000 }) => {
                     src={slides[currentImgIndex].url}
                 />
                 {/* left arrow */}
-                <div className='absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-gray-300 hover:text-white bg-black/20 cursor-pointer'>
+                <div className='absolute rounded-xl top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-gray-300 hover:text-white bg-black/20 cursor-pointer'>
                     <FaAngleLeft size={30} onClick={prevSlide} />
                 </div>
                 {/* right arrow */}
-                <div className='absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-gray-300 hover:text-white bg-black/20 cursor-pointer'>
+                <div className='absolute rounded-xl top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-gray-200 hover:text-white bg-black/20 cursor-pointer'>
                     <FaAngleRight size={30} onClick={nextSlide} />
                 </div>
                 <div className='absolute bottom-5 left-0 right-0'>
