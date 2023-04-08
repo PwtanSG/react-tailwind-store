@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { FaAngleLeft, FaRegHeart, FaHeart } from 'react-icons/fa'
 import axios from 'axios'
@@ -21,6 +21,7 @@ const ProductDetail = () => {
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
     // const APP_PATH = process.env.REACT_APP_PATH ? process.env.REACT_APP_PATH : '/'
     const navigate = useNavigate()
+    const mount = useRef(true)
 
     const updateToFavourite = (productId) => {
         let selected_favourite = [...favourite]
@@ -35,29 +36,37 @@ const ProductDetail = () => {
         localStorage.setItem('favourite_pid', JSON.stringify(selected_favourite))
     }
 
-    const getProduct = async () => {
-        setLoading(true)
-        try {
-            const response = await axios({
-                method: 'get',
-                url: API_URL + 'product/' + id,
-            })
-            setProduct(response.data)
-            setLoading(false)
-        } catch (err) {
-            // console.log('err', err)
-            setLoading(false)
-            setStatus({
-                ...status,
-                error: true,
-                errorMessage: err.response.data.message
-            })
-        }
-    }
-
     useEffect(() => {
+
+        const getProduct = async () => {
+            setLoading(true)
+            try {
+                const response = await axios({
+                    method: 'get',
+                    url: API_URL + 'product/' + id,
+                })
+                setProduct(response.data)
+                setLoading(false)
+            } catch (err) {
+                // console.log('err', err)
+                setLoading(false)
+                setStatus({
+                    ...status,
+                    error: true,
+                    errorMessage: err.response.data.message
+                })
+            }
+        }
+
         setFavourite(localStorage.getItem('favourite_pid')? JSON.parse(localStorage.getItem('favourite_pid')) : [])
-        getProduct();
+
+        if (mount.current) {
+            getProduct();
+        }
+
+        return ()=> {
+            mount.current = false
+        }
     }, [id])
 
     return (

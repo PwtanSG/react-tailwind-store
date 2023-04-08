@@ -86,7 +86,7 @@ const Products = (props) => {
                 })
                 setProducts(response.data.Products)
                 setFilteredProducts(response.data.Products)
-                console.log(response.data.Products)
+                // console.log(response.data.Products)
             } catch (err) {
                 setStatus({
                     ...status,
@@ -104,7 +104,7 @@ const Products = (props) => {
                     url: API_URL + 'category',
                 })
                 setCategories(response.data.Category)
-                console.log(response.data.Category)
+                // console.log(response.data.Category)
             } catch (err) {
                 setStatus({
                     ...status,

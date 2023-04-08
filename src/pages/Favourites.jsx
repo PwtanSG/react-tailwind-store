@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
@@ -13,6 +13,7 @@ const Favourites = () => {
     const IMG_PATH = process.env.REACT_APP_BACKEND_IMAGE_PATH
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
     const navigate = useNavigate();
+    const mount = useRef(true)
 
     const updateToFavourite = (productId) => {
         let selected_favourite = [...favourite]
@@ -27,29 +28,28 @@ const Favourites = () => {
         localStorage.setItem('favourite_pid', JSON.stringify(selected_favourite))
     }
 
-    const getProductData = async () => {
-        setLoading(true)
-        const fav = [...favourite]
-        try {
-            const response = await axios({
-                method: 'get',
-                url: API_URL + 'product',
-            })
-            let fav_products = response.data.Products.filter(product => fav.includes(product.productid))
-            setFavProducts(fav_products)
-            setLoading(false)
-        } catch (err) {
-            // console.log('err', err)
-            setLoading(false)
-            setStatus({
-                ...status,
-                error: true,
-                errorMessage: err.response.data.message
-            })
-        }
-    }
-
     useEffect(() => {
+        const getProductData = async () => {
+            setLoading(true)
+            const fav = [...favourite]
+            try {
+                const response = await axios({
+                    method: 'get',
+                    url: API_URL + 'product',
+                })
+                let fav_products = response.data.Products.filter(product => fav.includes(product.productid))
+                setFavProducts(fav_products)
+                setLoading(false)
+            } catch (err) {
+                // console.log('err', err)
+                setLoading(false)
+                setStatus({
+                    ...status,
+                    error: true,
+                    errorMessage: err.response.data.message
+                })
+            }
+        }
         getProductData()
     }, [API_URL, favourite])
 
