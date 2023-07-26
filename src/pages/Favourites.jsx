@@ -13,7 +13,7 @@ const Favourites = () => {
     const IMG_PATH = process.env.REACT_APP_BACKEND_IMAGE_PATH
     const API_URL = process.env.REACT_APP_BACKEND_BASE_URL
     const navigate = useNavigate();
-    const mount = useRef(true)
+    const rendered = useRef(true)
 
     const updateToFavourite = (productId) => {
         let selected_favourite = [...favourite]
@@ -29,15 +29,17 @@ const Favourites = () => {
     }
 
     useEffect(() => {
+
         const getProductData = async () => {
             setLoading(true)
             const fav = [...favourite]
             try {
                 const response = await axios({
                     method: 'get',
-                    url: API_URL + 'product',
+                    url: `${API_URL}products`,
+                    // url: API_URL + 'products',
                 })
-                let fav_products = response.data.Products.filter(product => fav.includes(product.productid))
+                let fav_products = response.data.filter(product => fav.includes(product.id))
                 setFavProducts(fav_products)
                 setLoading(false)
             } catch (err) {
@@ -50,7 +52,9 @@ const Favourites = () => {
                 })
             }
         }
+
         getProductData()
+
     }, [API_URL, favourite])
 
     useEffect(() => {
@@ -60,7 +64,7 @@ const Favourites = () => {
     return (
         <div className='max-w-[1640px] mx-auto px-4 py-8'>
             <div className='flex '>
-                <h1 className='text-orange-600 font-bold text-4xl text-center'>My Favourites</h1>
+                <h1 className='text-orange-600 font-bold text-4xl text-center'>My Favourites ({favProducts.length})</h1>
             </div>
             {!favProducts.length && <div className='py-8'>You have no favourites added yet!</div>}
             {(favProducts.length > 0) && (
@@ -68,28 +72,28 @@ const Favourites = () => {
                     {!loading &&
                         favProducts.map(item => (
                             <div
-                                key={item.productid}
+                                key={item.id}
                                 className='border shadow-lg rounded-lg hover:scale-105 duration-500'
                             >
                                 <img
-                                    src={item?.imageurl ? IMG_PATH + item.imageurl.substring(item.imageurl.lastIndexOf('/') + 1) : ''}
+                                    src={item?.image ? IMG_PATH + item.image.substring(item.image.lastIndexOf('/') + 1) : ''}
                                     alt={item.name}
                                     className='w-full h-[200px] object-cover rounded-t-lg cursor-pointer'
-                                    onClick={() => navigate('/product/' + item.productid)}
+                                    onClick={() => navigate('/product/' + item.id)}
                                 />
                                 <div className='flex justify-between px-2 py-4 bg-gray-50'>
                                     <p className='font-bold flex items-center'>{item.name}
-                                        {favourite.includes(item.productid) ?
+                                        {favourite.includes(item.id) ?
                                             (<FaHeart
                                                 size={18}
                                                 className='text-[#e60000] ml-2 cursor-pointer'
-                                                onClick={() => updateToFavourite(item.productid)}
+                                                onClick={() => updateToFavourite(item.id)}
                                             />)
                                             :
                                             (<FaRegHeart
                                                 size={18}
                                                 className='text-gray-500 ml-2 cursor-pointer'
-                                                onClick={() => updateToFavourite(item.productid)}
+                                                onClick={() => updateToFavourite(item.id)}
                                             />)}
                                     </p>
                                     <p>

@@ -5,10 +5,10 @@ import axios from 'axios'
 
 const ProductDetail = () => {
     const initProduct = {
-        productid: '',
-        description: '',
+        id: '',
+        descriptions: '',
         name: '',
-        imageurl: '',
+        image: '',
         price: 0
     }
     const initStatus = {}
@@ -31,7 +31,7 @@ const ProductDetail = () => {
         } else {
             selected_favourite = [...favourite, productId]
             setFavourite(selected_favourite)
-            
+
         }
         localStorage.setItem('favourite_pid', JSON.stringify(selected_favourite))
     }
@@ -43,7 +43,7 @@ const ProductDetail = () => {
             try {
                 const response = await axios({
                     method: 'get',
-                    url: API_URL + 'product/' + id,
+                    url: API_URL + 'products/' + id,
                 })
                 setProduct(response.data)
                 setLoading(false)
@@ -58,13 +58,13 @@ const ProductDetail = () => {
             }
         }
 
-        setFavourite(localStorage.getItem('favourite_pid')? JSON.parse(localStorage.getItem('favourite_pid')) : [])
+        setFavourite(localStorage.getItem('favourite_pid') ? JSON.parse(localStorage.getItem('favourite_pid')) : [])
 
         if (mount.current) {
             getProduct();
         }
 
-        return ()=> {
+        return () => {
             mount.current = false
         }
     }, [id])
@@ -78,27 +78,27 @@ const ProductDetail = () => {
                             className='border shadow-lg rounded-lg'
                         >
                             <img
-                                src={product?.imageurl ? IMG_PATH + product.imageurl.substring(product.imageurl.lastIndexOf('/') + 1) : ''}
+                                src={product?.image ? IMG_PATH + product.image.substring(product.image.lastIndexOf('/') + 1) : ''}
                                 alt={product.name}
                                 className='w-full h-[300px] object-cover rounded-lg'
                             />
                         </div>
                         <div className='relative'>
                             <h2 className='font-bold mt-0 sm:mt-5'>{product.name}</h2>
-                            <p className='mt-3'>{product.description} </p>
+                            <p className='mt-3'>{product.descriptions} </p>
                             <p className='mt-3'>Price : ${Number(product.price).toFixed(2)}</p>
-                            {favourite.includes(product.productid) ?
-                                    (<FaHeart
-                                        size={18}
-                                        className='text-[#e60000] mt-3 cursor-pointer'
-                                        onClick={() => updateToFavourite(product.productid)}
-                                    />)
-                                    :
-                                    (<FaRegHeart
-                                        size={18}
-                                        className='text-gray-500 mt-3 cursor-pointer'
-                                        onClick={() => updateToFavourite(product.productid)}
-                                    />)}
+                            {favourite.includes(product.id) ?
+                                (<FaHeart
+                                    size={18}
+                                    className='text-[#e60000] mt-3 cursor-pointer'
+                                    onClick={() => updateToFavourite(product.id)}
+                                />)
+                                :
+                                (<FaRegHeart
+                                    size={18}
+                                    className='text-gray-500 mt-3 cursor-pointer'
+                                    onClick={() => updateToFavourite(product.id)}
+                                />)}
                             <button
                                 className='md:absolute md:left-0 md:bottom-5 mt-5 m-1 font-bold border-gray-600 text-gray-600 hover:bg-orange-600 hover:text-white duration-300 hover:font-bold  hover:border-orange-600'
                                 onClick={() => navigate(-1)}

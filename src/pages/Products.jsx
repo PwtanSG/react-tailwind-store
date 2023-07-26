@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { redirect, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 
@@ -40,7 +40,7 @@ const Products = (props) => {
             return
         }
         const filtered_products = products.filter((product) =>
-            product.categoryid === category_id
+            product.category_id === category_id
         )
         setSelectedCategory(category_id)
         setFilteredProducts(filtered_products)
@@ -82,11 +82,13 @@ const Products = (props) => {
             try {
                 const response = await axios({
                     method: 'get',
-                    url: API_URL + 'product',
+                    url: API_URL + 'products',
                 })
-                setProducts(response.data.Products)
-                setFilteredProducts(response.data.Products)
-                // console.log(response.data.Products)
+                // setProducts(response.data.Products)
+                setProducts(response.data)
+                // setFilteredProducts(response.data.Products)
+                setFilteredProducts(response.data)
+                console.log(response.data)
             } catch (err) {
                 setStatus({
                     ...status,
@@ -101,10 +103,11 @@ const Products = (props) => {
             try {
                 const response = await axios({
                     method: 'get',
-                    url: API_URL + 'category',
+                    url: API_URL + 'categories',
                 })
-                setCategories(response.data.Category)
-                // console.log(response.data.Category)
+                setCategories(response.data)
+                // setCategories(response.data.Category)
+                // console.log(response.data)
             } catch (err) {
                 setStatus({
                     ...status,
@@ -113,7 +116,9 @@ const Products = (props) => {
                 })
             }
         }
+
         if (rendered.current) {
+            // console.log(rendered.current)
             setLoading(true)
             getProductData()
             getCategoriesData()
@@ -122,7 +127,7 @@ const Products = (props) => {
             // rendered.current = false
         }
 
-        return ()=>{
+        return () => {
             rendered.current = false
         }
     }, [API_URL])
@@ -159,12 +164,12 @@ const Products = (props) => {
                             </button>
                             {
                                 categories.map((category) => {
-                                    const selected = selectedCategory === category.categoryid
-                                    return <button key={category.categoryid}
+                                    const selected = selectedCategory === category.id
+                                    return <button key={category.id}
                                         className={`m-1 transition ease-in-out border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white duration-300 hover:-translate-y-1 hover:scale-105 ${selected ? "bg-orange-600 text-white" : ""}`}
-                                        onClick={() => filterCategory(category.categoryid)}
+                                        onClick={() => filterCategory(category.id)}
                                     >
-                                        {category.cname}
+                                        {category.name}
                                     </button>
                                 })
                             }
@@ -173,32 +178,34 @@ const Products = (props) => {
                 </div>
             }
             {/* display products */}
+            <div className='text-gray-700'>items found : {filteredProducts.length}</div>
             <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-4'>
+
                 {filteredProducts.map((item, index) => (
                     <div
                         key={index}
                         className='border shadow-lg rounded-lg hover:scale-105 duration-500'
                     >
                         <img
-                            src={item?.imageurl ? IMG_PATH + item.imageurl.substring(item.imageurl.lastIndexOf('/') + 1) : ''}
+                            src={item?.image ? IMG_PATH + item.image.substring(item.image.lastIndexOf('/') + 1) : ''}
                             alt={item.name}
                             className='w-full h-[200px] object-cover rounded-t-lg cursor-pointer'
-                            onClick={() => navigate(APP_PATH + 'product/' + item.productid)}
+                            onClick={() => navigate(APP_PATH + 'product/' + item.id)}
                         />
                         <div className='flex justify-between px-2 py-4 bg-gray-50'>
                             <p className='font-bold flex items-center'>{item.name}
 
-                                {favourite.includes(item.productid) ?
+                                {favourite.includes(item.id) ?
                                     (<FaHeart
                                         size={18}
                                         className='text-[#e60000] ml-2 cursor-pointer'
-                                        onClick={() => updateToFavourite(item.productid)}
+                                        onClick={() => updateToFavourite(item.id)}
                                     />)
                                     :
                                     (<FaRegHeart
                                         size={18}
                                         className='text-gray-500 ml-2 cursor-pointer'
-                                        onClick={() => updateToFavourite(item.productid)}
+                                        onClick={() => updateToFavourite(item.id)}
                                     />)}
                             </p>
                             <p>
